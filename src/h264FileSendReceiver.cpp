@@ -1,4 +1,5 @@
 #include <iostream>
+#include <jrtplib3/rtpconfig.h>
 #include <jrtplib3/rtppacket.h>
 #include <jrtplib3/rtpipv4address.h>
 #include "common.h"
@@ -187,18 +188,19 @@ bool H264FileSendReceiver::recvFile(const std::string& filePath, const std::stri
     // 等待接收数据
     m_sessionPtr->BeginDataAccess();
 
-    RTPTime delay(0.001);
+    RTPTime delay(1);
 	RTPTime startTime = RTPTime::CurrentTime();
 
     bool endFlag = false;
     while (!endFlag) {
-        // 接收网络数据错误
-        if (m_sessionPtr->Poll() < 0) {
-            std::cerr << "Recv file error. poll failed." << std::endl;
-            fclose(fd);
-            return false;
+
+#ifndef RTP_SUPPORT_THREAD
+        // 接收网络数据错误(未使用jthread时使用)
+        if (!Checkerror(m_sessionPtr->Poll())) {
+            continue;
         }
-        
+#endif
+
         // 接收网络数据处理
         if (m_sessionPtr->GotoFirstSourceWithData()) {
             uint32_t pos = 0;
