@@ -30,3 +30,13 @@
 *.exe
 *.out
 *.app
+
+# Self
+.cache/
+build/
+bin/
+thirdPartLib/jrtplib-3.11.2/.cache/
+thirdPartLib/jrtplib-3.11.2/build/
+thirdPartLib/jrtplib-3.11.2/Install/
+thirdPartLib/jthread-1.3.3/build/
+thirdPartLib/jthread-1.3.3/Install/
