@@ -18,11 +18,11 @@ add_executable(${PROJECT_NAME} ${SRC_FILES})
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/include)
 
 # 链接库
-target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/thirdPartLib/jrtplib-3.11.2/Install/include)
-target_link_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/thirdPartLib/jrtplib-3.11.2/build/src)
+target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/3rdPart/jrtplib-3.11.2/Install/include)
+target_link_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/3rdPart/jrtplib-3.11.2/build/src)
 target_link_libraries(${PROJECT_NAME} PRIVATE jrtp)
 
-target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/thirdPartLib/jthread-1.3.3/Install/include)
-target_link_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/thirdPartLib/jthread-1.3.3/Install/lib)
+target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/3rdPart/jthread-1.3.3/Install/include)
+target_link_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/3rdPart/jthread-1.3.3/Install/lib)
 target_link_libraries(${PROJECT_NAME} PRIVATE jthread)
 
