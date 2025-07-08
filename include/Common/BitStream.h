@@ -42,6 +42,11 @@ public:
         return m_buffer.size();
     }
 
+    // 获取剩余可读比特个数
+    inline std::size_t getRemainBitSize() const {
+        return (m_buffer.size() * 8) - (m_pos * 8) - (8 - m_bitOffset);
+    }
+
     // 判断是否到达比特流缓冲区末尾
     inline bool isEnd() const {
         return m_pos >= m_buffer.size();

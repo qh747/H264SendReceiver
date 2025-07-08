@@ -26,7 +26,7 @@ int BitStream::readOneBit() {
 
 int BitStream::readNBits(std::size_t count) {
     // 获取当前可读比特数 = 缓冲区总比特数 - 字节偏移量 - 比特偏移量
-    auto remainBites = (m_buffer.size() * 8) - (m_pos * 8) - (8 - m_bitOffset);
+    auto remainBites = this->getRemainBitSize();
     count = count <= remainBites ? count : remainBites;
 
     // 读取当前比特并移动到正确的位置

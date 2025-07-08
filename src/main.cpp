@@ -1,3 +1,4 @@
+#include <iomanip>
 #include <iostream>
 #include "Common/BitStream.h"
 #include "AnnexB/FileReader.h"
@@ -31,12 +32,12 @@ void FuncTestBitStream() {
 
     // 测试数据正常读取
     BitStream bs(buffer, size);
-    std::cout << "readOneByte: " << bs.readNBits(8) << std::endl;
-    std::cout << "readTwoBytes: " << bs.readNBits(16) << std::endl;
+    std::cout << "readOneByte: " << std::hex << std::showbase << bs.readNBits(8) << std::endl;
+    std::cout << "readTwoBytes: " << std::hex << std::showbase << bs.readNBits(16) << std::endl;
 
     // 测试数据越界读取
     while (!bs.isEnd()) {
-        std::cout << "readFiveBits: " << bs.readNBits(5) << std::endl;
+        std::cout << "readFiveBits: " << std::hex << std::showbase << bs.readNBits(5) << std::endl;
     }
 }
 
