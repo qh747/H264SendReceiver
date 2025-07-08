@@ -43,10 +43,17 @@ public:
     bool isValid() const;
 
     /**
-     * @brief  判断nalu数据首部
+     * @brief  获取nalu数据首部
      * @return nalu数据首部
      */
     uint8_t getHead() const;
+
+    /**
+     * @brief  判断nalu数据
+     * @return nalu数据
+     * @param  size nalu数据长度
+     */
+    const uint8_t* getBody(std::size_t& size) const;
 
 public:
     /**
@@ -63,4 +70,4 @@ private:
     std::vector<uint8_t> m_buffer;
 };
 
-}; // namespace AnnexB
+}; // namespace TestAnnexBFileReader

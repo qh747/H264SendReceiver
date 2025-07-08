@@ -60,4 +60,4 @@ private:
     std::vector<uint8_t> m_buffer;
 };
 
-}; // namespace AnnexB
+}; // namespace TestAnnexBFileReader

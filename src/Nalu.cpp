@@ -58,6 +58,16 @@ uint8_t Nalu::getHead() const {
     return !this->isValid() ? 0 : m_buffer[m_startCodeLen];
 }
 
+const uint8_t* Nalu::getBody(std::size_t& size) const {
+    if (!isValid()) {
+        size = 0;
+        return nullptr;
+    }
+
+    size = m_buffer.size() - m_startCodeLen - 1;
+    return &m_buffer[m_startCodeLen + 1];
+}
+
 std::string Nalu::dumpString() const {
     if (!this->isValid()) {
         return "";
@@ -67,19 +77,19 @@ std::string Nalu::dumpString() const {
     ss << "NALU ========================" << std::endl;
     ss << "len: " << m_buffer.size() << std::endl;
 
-    ss << "start code: -----------------" << std::endl;
+    ss << "START CODE: -----------------" << std::endl;
     for (auto idx = 0; idx < m_startCodeLen; ++idx) {
         ss << std::setw(2) << std::setfill('0') << std::hex << static_cast<int>(m_buffer[idx]) << " ";
     }
     ss << std::endl;
 
-    ss << "nalu head: ------------------" << std::endl;
+    ss << "NALU HEAD: ------------------" << std::endl;
     uint8_t naluHead = this->getHead();
     ss << "forbidden_bit: " << static_cast<int>((naluHead >> 7) & 1) << std::endl;
     ss << "nal_ref_idc: " << static_cast<int>((naluHead >> 5) & 3) << std::endl;
     ss << "nal_unit_type: " << Nalu::GetNaluType((naluHead >> 0) & 0x1f) << std::endl;
 
-    ss << "nalu data: ------------------" << std::endl;
+    ss << "NALU BODY: ------------------" << std::endl;
     for (auto idx = m_startCodeLen + 1; idx < m_buffer.size(); ++idx) {
         ss << std::setw(2) << std::setfill('0') << std::hex << static_cast<int>(m_buffer[idx]) << " ";
     }
@@ -88,4 +98,4 @@ std::string Nalu::dumpString() const {
     return ss.str();
 }
 
-} // namespace AnnexB
+} // namespace TestAnnexBFileReader

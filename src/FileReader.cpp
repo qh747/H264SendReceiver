@@ -127,4 +127,4 @@ bool FileReader::FindStartCode(const uint8_t* buf, std::size_t len, std::size_t&
     return false;
 }
 
-} // namespace AnnexB
+} // namespace TestAnnexBFileReader
