@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <cstdint>
+#include "Common/DataDef.h"
 
 namespace AnnexB {
 
@@ -9,14 +10,6 @@ namespace AnnexB {
  * @brief NALU类
  */
 class Nalu {
-public:
-    /**
-     * @brief  获取nalu类型
-     * @return 字符串格式nalu类型
-     * @param  naluType nalu类型
-     */
-    static std::string GetNaluType(uint8_t naluType);
-
 public:
     /**
      * @brief 设置起始码长度
@@ -36,6 +29,7 @@ public:
      */
     void clear();
 
+public:
     /**
      * @brief  判断nalu数据是否有效
      * @return 是否有效
@@ -49,11 +43,23 @@ public:
     uint8_t getHead() const;
 
     /**
-     * @brief  判断nalu数据
+     * @brief  获取nalu数据
      * @return nalu数据
      * @param  size nalu数据长度
      */
     const uint8_t* getBody(std::size_t& size) const;
+
+    /**
+     * @brief  获取nalu类型
+     * @return nalu类型
+     */
+    Common::Nalu_t getNaluType() const;
+
+    /**
+     * @brief  获取起始码长度
+     * @return 起始码长度
+     */
+    std::size_t getStartCodeLen() const;
 
 public:
     /**

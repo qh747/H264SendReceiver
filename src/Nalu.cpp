@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <sstream>
 #include "AnnexB/Nalu.h"
+using Common::Nalu_t;
 
 namespace AnnexB {
 
@@ -24,7 +25,7 @@ static std::map<uint8_t, std::string> NaluTypeMap = {
     {0x0f, "Subset SPS"}
 };
 
-std::string Nalu::GetNaluType(uint8_t naluType) {
+static std::string GetNaluTypeStr(uint8_t naluType) {
     auto it = NaluTypeMap.find(naluType);
     return it == NaluTypeMap.end() ? std::to_string(naluType) : it->second;
 }
@@ -68,6 +69,15 @@ const uint8_t* Nalu::getBody(std::size_t& size) const {
     return &m_buffer[m_startCodeLen + 1];
 }
 
+Nalu_t Nalu::getNaluType() const {
+    uint8_t naluHead = this->getHead();
+    return static_cast<Nalu_t>(naluHead & 0x1f);
+}
+
+std::size_t Nalu::getStartCodeLen() const {
+    return m_startCodeLen;
+}
+
 std::string Nalu::dumpString() const {
     if (!this->isValid()) {
         return "";
@@ -87,7 +97,7 @@ std::string Nalu::dumpString() const {
     uint8_t naluHead = this->getHead();
     ss << "forbidden_bit: " << static_cast<int>((naluHead >> 7) & 1) << std::endl;
     ss << "nal_ref_idc: " << static_cast<int>((naluHead >> 5) & 3) << std::endl;
-    ss << "nal_unit_type: " << Nalu::GetNaluType((naluHead >> 0) & 0x1f) << std::endl;
+    ss << "nal_unit_type: " << GetNaluTypeStr((naluHead >> 0) & 0x1f) << std::endl;
 
     ss << "NALU BODY: ------------------" << std::endl;
     for (auto idx = m_startCodeLen + 1; idx < m_buffer.size(); ++idx) {
