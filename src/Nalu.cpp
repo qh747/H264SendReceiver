@@ -98,12 +98,6 @@ std::string Nalu::dumpString() const {
     ss << "nal_ref_idc: " << static_cast<int>((naluHead >> 5) & 3) << std::endl;
     ss << "nal_unit_type: " << GetNaluTypeStr((naluHead >> 0) & 0x1f) << std::endl;
 
-    ss << "NALU BODY: ------------------" << std::endl;
-    for (auto idx = m_startCodeLen + 1; idx < m_buffer.size(); ++idx) {
-        ss << std::setw(2) << std::setfill('0') << std::hex << static_cast<int>(m_buffer[idx]) << " ";
-    }
-    ss << std::endl;
-
     return ss.str();
 }
 
