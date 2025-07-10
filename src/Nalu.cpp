@@ -59,14 +59,13 @@ uint8_t Nalu::getHead() const {
     return !this->isValid() ? 0 : m_buffer[m_startCodeLen];
 }
 
-const uint8_t* Nalu::getBody(std::size_t& size) const {
-    if (!isValid()) {
-        size = 0;
-        return nullptr;
+bool Nalu::getEbsp(Ebsp& ebsp) const {
+    if (!this->isValid()) {
+        return false;
     }
 
-    size = m_buffer.size() - m_startCodeLen - 1;
-    return &m_buffer[m_startCodeLen + 1];
+    ebsp.setBuffer(&m_buffer[m_startCodeLen], m_buffer.size() - m_startCodeLen);
+    return true;
 }
 
 Nalu_t Nalu::getNaluType() const {

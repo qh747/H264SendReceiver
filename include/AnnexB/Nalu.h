@@ -3,11 +3,30 @@
 #include <vector>
 #include <cstdint>
 #include "Common/DataDef.h"
+#include "AnnexB/Ebsp.h"
 
 namespace AnnexB {
 
 /**
  * @brief NALU类
+ * @note  NALU数据格式一
+ * +---------------+---------------+---------------+---------------+
+ * | 1             | 2             | 3             | 4             |
+ * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ * |                 Start Code (0x 00 00 00 01)                   |
+ * +---------------+---------------+---------------+---------------+
+ * |F|NRI|  Type   |               Nalu Body                       |
+ * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+---------------+---------------+
+ *
+ * @note  NALU数据格式二
+ * +---------------+---------------+---------------+---------------+
+ * | 1             | 2             | 3             | 4             |
+ * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ * |            Start Code (0x 00 00 01)           |F|NRI|  Type   |
+ * +---------------+---------------+---------------+---------------+
+ * |                           Nalu Body                           |
+ * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+---------------+---------------+
+ *
  */
 class Nalu {
 public:
@@ -43,11 +62,11 @@ public:
     uint8_t getHead() const;
 
     /**
-     * @brief  获取nalu数据
-     * @return nalu数据
-     * @param  size nalu数据长度
+     * @brief  获取ebsp数据
+     * @return 获取结果
+     * @param  ebsp ebsp数据
      */
-    const uint8_t* getBody(std::size_t& size) const;
+    bool getEbsp(Ebsp& ebsp) const;
 
     /**
      * @brief  获取nalu类型
@@ -61,7 +80,6 @@ public:
      */
     std::size_t getStartCodeLen() const;
 
-public:
     /**
      * @brief  输出nalu数据
      * @return nalu数据
